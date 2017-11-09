@@ -2,9 +2,6 @@
     if($_SESSION['mfirstname'] == ""){
         echo "<script type='text/javascript'>alert('email and password incorrect!')</script>";
         exit();
-//        echo "<script>setTimeout(\"location.href = 'index.php';\",3000);</script>";
-//        echo "Please Login!";
-//        exit();
     }
     include 'connect-mysql.php';
 
