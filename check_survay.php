@@ -123,9 +123,10 @@
 
         echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
         echo "<script type='text/javascript'>alert('SURVAY ID :' + ' $message ' + ' Firstname ' +' $name'  +' Lastname ' + ' $lastname ')</script>";
-        echo '<a class="btn btn-outline-success my-2 my-sm-0" href="user_index.php">GO TO SURVAY</a>';
-        echo '<a class="btn btn-outline-success my-2 my-sm-0" href="homepage.php">GO TO SUMMARY</a>';
-        //echo "<script>setTimeout(\"location.href = 'homepage.php';\",2000);</script>";
+
+        echo '<p><a class="btn btn-outline-success my-2 my-sm-0" href="user_index.php">GO TO SURVAY</a></p>';
+        echo '<p><a class="btn btn-outline-success my-2 my-sm-0" href="homepage.php">GO TO SUMMARY</a></p>';
+
     }
 
     else{
