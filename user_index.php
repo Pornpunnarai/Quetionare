@@ -9,15 +9,11 @@
               memail = '".$_SESSION['memail']."'";
     $strSQL2 = "SELECT tname FROM team WHERE tid = '".$_SESSION['tid']."'";
 
-    $strSQLArea = "SELECT * FROM Area";
-
     $objQuery = mysqli_query($objCon, $strSQL);
     $objQuery2 = mysqli_query($objCon, $strSQL2);
-    $objQueryArea = mysqli_query($objCon, $strSQLArea);
 
     $objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC);
     $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
-    $objResultArea = mysqli_fetch_array($objQueryArea, MYSQLI_ASSOC);
 ?>
 
     <html>
@@ -50,10 +46,14 @@
                         <a class="nav-link disabled" href="#">Hello, <?php echo $objResult["mfirstname"];?> <?php echo $objResult["mlastname"];?> </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Manager Id: <?php echo $objResult["mid"];?> </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link disabled" href="#">TEAM: <?php echo $objResult2["tname"];?> </a>
                     </li>
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="homepage.php">View Data</a>
                     <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php">LOGOUT</a>
                 </form>
             </div>

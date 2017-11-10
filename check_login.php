@@ -28,6 +28,7 @@
     else{
         $_SESSION["mfirstname"] = $objResult["mfirstname"];
         $_SESSION["memail"] = $objResult["memail"];
+        $_SESSION["mid"] = $objResult["mid"];
         $_SESSION["tid"] = $objResult["tid"];
         $_SESSION["role"] = $objResult["role"];
 

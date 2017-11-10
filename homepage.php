@@ -1,22 +1,20 @@
 <?php session_start();
-if($_SESSION['survay_id'] == ""){
-    exit();
-}
 include 'connect-mysql.php';
 
+mysqli_set_charset($objCon,"utf8");
 $strSQL = "SELECT * FROM manager WHERE 
               memail = '".$_SESSION['memail']."'";
 $strSQL2 = "SELECT tname FROM team WHERE tid = '".$_SESSION['tid']."'";
 
-$strSQLArea = "SELECT * FROM Area";
+$strSQLSurvay = "SELECT * FROM survay WHERE mid in (SELECT mid FROM manager WHERE 
+              memail = '".$_SESSION['memail']."')";
 
 $objQuery = mysqli_query($objCon, $strSQL);
 $objQuery2 = mysqli_query($objCon, $strSQL2);
-$objQueryArea = mysqli_query($objCon, $strSQLArea);
+$objQuerySurvay  = mysqli_query($objCon, $strSQLSurvay);
 
 $objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC);
 $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
-$objResultArea = mysqli_fetch_array($objQueryArea, MYSQLI_ASSOC);
 ?>
 
     <html>
@@ -48,11 +46,18 @@ $objResultArea = mysqli_fetch_array($objQueryArea, MYSQLI_ASSOC);
                     <li class="nav-item active">
                         <a class="nav-link disabled" href="#">Hello, <?php echo $objResult["mfirstname"];?> <?php echo $objResult["mlastname"];?> </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">Manager Id: <?php echo $objResult["mid"];?> </a>
+                    </li>
+
                     <li class="nav-item">
                         <a class="nav-link disabled" href="#">TEAM: <?php echo $objResult2["tname"];?> </a>
                     </li>
+
                 </ul>
                 <form class="form-inline mt-2 mt-md-0">
+                    <a class="btn btn-outline-success my-2 my-sm-0" href="user_index.php">HOME</a>
                     <a class="btn btn-outline-success my-2 my-sm-0" href="logout.php">LOGOUT</a>
                 </form>
             </div>
@@ -66,9 +71,36 @@ $objResultArea = mysqli_fetch_array($objQueryArea, MYSQLI_ASSOC);
     <main role="main" class="container">
         <div class="mt-3">
             <br>
-            <h3 style="text-align: center">แบบสอบถาม</h3>
+            <h3 style="text-align: center">สรุปแบบสอบถาม</h3>
             <h4 style="text-align: center">โครงการสำรวจพฤติกรรมการเดินทางของประชาชนในกลุ่มภาคเหนือตอนบน 4 จังหวัด</h4>
         </div>
+        <hr>
+
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>SurvayId</th>
+                <th>AreaId</th>
+                <th>First Name</th>
+                <th>LastName</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            while ($objResultSurvay = mysqli_fetch_array($objQuerySurvay, MYSQLI_ASSOC))
+            { ?>
+                <tr>
+                    <td ><?php echo $objResultSurvay["survay_id"];?></td>
+                    <td><?php echo $objResultSurvay["areaid"];?></td>
+                    <td><?php echo $objResultSurvay["firstname"];?></td>
+                    <td><?php echo $objResultSurvay["lastname"];?></td>
+                </tr>
+            <?php
+            }
+            ?>
+
+            </tbody>
+        </table>
 
     </main>
 
