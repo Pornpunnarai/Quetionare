@@ -76,6 +76,34 @@ $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
         </div>
         <hr>
 
+        <br>
+        <form action="homepage.php" method="post">
+            <div class="row">
+
+
+            <div class="col-md-2" style="text-align: right">เลือกพื้นที่</div>
+            <div class="col-md-8">
+            <select class="form-control" name="areaid">
+                <option value="0"><---เลือกทุกพื้นที่---></option>
+                <?php
+                $sqlarea = "SELECT * FROM Area ORDER BY areaId ASC";
+                $objQueryArea = mysqli_query($objCon, $sqlarea);
+                while($objResultArea = mysqli_fetch_array($objQueryArea,MYSQLI_ASSOC))
+                {
+                    ?>
+                    <option value="<?php echo $objResultArea["areaId"];?>">
+                    <?php echo $objResultArea["areaId"]." - ".$objResultArea["areaName"];?>
+                    </option>
+                <?php
+                }
+                ?>
+            </select>
+            </div>
+            <div class="col-md-1">
+                <input name="btnSubmit" class="btn btn-success btn-send" type="submit" value="Submit">
+            </div>
+            </div>
+        </form>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -83,17 +111,23 @@ $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
                 <th>AreaId</th>
                 <th>First Name</th>
                 <th>LastName</th>
+                <th>Createdate</th>
             </tr>
             </thead>
             <tbody>
             <?php
-            while ($objResultSurvay = mysqli_fetch_array($objQuerySurvay, MYSQLI_ASSOC))
+            $areaname = $_POST["areaid"];
+            $strSQLSurvayByArea = "SELECT * FROM survay WHERE mid in (SELECT mid FROM manager WHERE 
+              memail = '".$_SESSION['memail']."' and (areaId = '".$_POST["areaid"]."' or '$areaname' = 0))";
+            $objQuerySurvayArea  = mysqli_query($objCon, $strSQLSurvayByArea);
+            while ($objResultSurvayArea = mysqli_fetch_array($objQuerySurvayArea, MYSQLI_ASSOC))
             { ?>
                 <tr>
-                    <td ><?php echo $objResultSurvay["survay_id"];?></td>
-                    <td><?php echo $objResultSurvay["areaid"];?></td>
-                    <td><?php echo $objResultSurvay["firstname"];?></td>
-                    <td><?php echo $objResultSurvay["lastname"];?></td>
+                    <td ><?php echo $objResultSurvayArea["survay_id"];?></td>
+                    <td><?php echo $objResultSurvayArea["areaid"];?></td>
+                    <td><?php echo $objResultSurvayArea["firstname"];?></td>
+                    <td><?php echo $objResultSurvayArea["lastname"];?></td>
+                    <td><?php echo $objResultSurvayArea["createdate"];?></td>
                 </tr>
             <?php
             }
