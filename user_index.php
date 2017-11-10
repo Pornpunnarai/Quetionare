@@ -78,12 +78,21 @@
             <div class="row">
                 <div class="col-md-12">
                     <label for="form_areacode"><b>Area Code *</b></label>
+
                     <select class="form-control" name="areaid" required="required" data-error="Area code is required.">
-                        <option value="" disabled selected>Please Select Area</option>
-                        <option value="1">MSN</option>
-                        <option value="2">LPT</option>
-                        <option value="3">LPN</option>
-                        <option value="4">CNX</option>
+                        <option value="">Please Select Area</option>
+                        <?php
+                        $sqlarea = "SELECT * FROM Area ORDER BY areaId ASC";
+                        $objQueryArea = mysqli_query($objCon, $sqlarea);
+                        while($objResultArea = mysqli_fetch_array($objQueryArea,MYSQLI_ASSOC))
+                        {
+                            ?>
+                            <option value="<?php echo $objResultArea["areaId"];?>">
+                                <?php echo $objResultArea["areaId"]." - ".$objResultArea["areaName"];?>
+                            </option>
+                            <?php
+                        }
+                        ?>
                     </select>
                 </div>
             </div>

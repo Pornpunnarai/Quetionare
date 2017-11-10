@@ -2,6 +2,8 @@
 include 'connect-mysql.php';
 
 mysqli_set_charset($objCon,"utf8");
+$areaname = $_POST["areaid"];
+
 $strSQL = "SELECT * FROM manager WHERE 
               memail = '".$_SESSION['memail']."'";
 $strSQL2 = "SELECT tname FROM team WHERE tid = '".$_SESSION['tid']."'";
@@ -30,7 +32,7 @@ $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
         <link href="/questionare/css/bootstrap.min.css" rel="stylesheet">
 
         <!-- Custom styles for this template -->
-        <link href="sticky-footer-navbar.css" rel="stylesheet">
+        <link href="css/sticky-footer-navbar.css" rel="stylesheet">
     </head>
 
     <body>
@@ -116,9 +118,8 @@ $objResult2 = mysqli_fetch_array($objQuery2, MYSQLI_ASSOC);
             </thead>
             <tbody>
             <?php
-            $areaname = $_POST["areaid"];
             $strSQLSurvayByArea = "SELECT * FROM survay WHERE mid in (SELECT mid FROM manager WHERE 
-              memail = '".$_SESSION['memail']."' and (areaId = '".$_POST["areaid"]."' or '$areaname' = 0))";
+              memail = '".$_SESSION['memail']."' and (areaId = '$areaname' or '$areaname' = 0))";
             $objQuerySurvayArea  = mysqli_query($objCon, $strSQLSurvayByArea);
             while ($objResultSurvayArea = mysqli_fetch_array($objQuerySurvayArea, MYSQLI_ASSOC))
             { ?>

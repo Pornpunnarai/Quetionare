@@ -91,7 +91,8 @@
 
     //insert to survaysectiontwo
     $sqlSurvay = "INSERT INTO survaysectiontwo (survay_id, salary, carlone, gasoline, bus, fixcar, carparking, tax, carinsurance, expensesoftravelperday)
-                  VALUES ((SELECT survay_id FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname'),'$saralytxt','$carlonetxt','$gasolinetxt','$bustxt',
+                  VALUES ((SELECT survay_id FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname' and mid = '$mid' and areaid = '$areaid'),
+                  '$saralytxt','$carlonetxt','$gasolinetxt','$bustxt',
                   '$fixcartxt','$carparkingtxt','$taxtxt','$carinsurancetxt','$expensesoftravelperdaytxt')";
 
     $query = mysqli_query($objCon, $sqlSurvay);
@@ -103,7 +104,7 @@
     typeoftravelone,typeoftraveltwo,typeoftravelthree, timetotravelofdayperkilo,usedvihicleadayperweek,
     addgasolinebathpertime,amountofpassengerpercar,typeoftransportation, frequenceoftransportationpermonth,
     factortousetrasportationone,factortousetrasportationtwo,factortousetrasportationthree,factortousetrasportationfour,factortousetrasportationfive)
-    VALUES ((SELECT survay_id FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname'),'$amountofcarperfamily',
+    VALUES ((SELECT survay_id FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname' and mid = '$mid' and areaid = '$areaid'),'$amountofcarperfamily',
     '$amountofcar','$amountofpickup','$amountofbicycle', '$amountofmotorcycle','$amountofothervehicles','$travelvehicle','$estimatetimetotravel',
     '$satisfiedofyourtravel','$expensesoftravel', '$typeoftravelone','$typeoftraveltwo','$typeoftravelthree',
     '$timetotravelofdayperkilo','$usedvihicleadayperweek','$addgasolinebathpertime','$amountofpassengerpercar','$typeoftransportation','$freusedservice',
@@ -111,13 +112,20 @@
 
     $query = mysqli_query($objCon, $sqlSurvayThree);
 
-    $strSQL = "SELECT * FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname'";
+    $strSQL = "SELECT * FROM survay WHERE firstname = '$txtfirstname' and lastname = '$txtlastname' and mid = '$mid' and areaid = '$areaid'";
     $objQuery = mysqli_query($objCon, $strSQL);
     $objResult = mysqli_fetch_array($objQuery, MYSQLI_ASSOC);
 
     if($query){
+        $message = $objResult["survay_id"];
+        $name = $objResult["firstname"];
+        $lastname = $objResult["lastname"];
+
         echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-        echo "<script>setTimeout(\"location.href = 'homepage.php';\",2000);</script>";
+        echo "<script type='text/javascript'>alert('SURVAY ID :' + ' $message ' + ' Firstname ' +' $name'  +' Lastname ' + ' $lastname ')</script>";
+        echo '<a class="btn btn-outline-success my-2 my-sm-0" href="user_index.php">GO TO SURVAY</a>';
+        echo '<a class="btn btn-outline-success my-2 my-sm-0" href="homepage.php">GO TO SUMMARY</a>';
+        //echo "<script>setTimeout(\"location.href = 'homepage.php';\",2000);</script>";
     }
 
     else{
